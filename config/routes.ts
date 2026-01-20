@@ -43,10 +43,10 @@
 		component: './TodoList',
 	},
 	{
-		path: '/LapTrinhWeb',
-		name: 'LapTrinhWeb',
+		path: '/Bai1',
+		name: 'Bai1',
 		icon: 'OrderedListOutlined',
-		component: './LapTrinhWeb/index',
+		component: './Bai1/index',
 	},
 
 	// DANH MUC HE THONG
