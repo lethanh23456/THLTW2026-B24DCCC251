@@ -42,6 +42,12 @@
 		icon: 'OrderedListOutlined',
 		component: './TodoList',
 	},
+	{
+		path: '/LapTrinhWeb',
+		name: 'LapTrinhWeb',
+		icon: 'OrderedListOutlined',
+		component: './LapTrinhWeb/index',
+	},
 
 	// DANH MUC HE THONG
 	// {
