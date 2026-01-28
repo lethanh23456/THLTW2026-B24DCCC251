@@ -43,10 +43,16 @@
 		component: './TodoList',
 	},
 	{
-		path: '/Bai1',
-		name: 'Bai1',
+		path: '/quanlisanpham',
+		name: 'quanlisanpham',
 		icon: 'OrderedListOutlined',
-		component: './Bai1/index',
+		component: './quanlisanpham/index',
+	},
+	{
+		path: '/quanlidonhang',
+		name: 'quanlidonhang',
+		icon: 'OrderedListOutlined',
+		component: './quanlidonhang/index',
 	},
 
 	// DANH MUC HE THONG
