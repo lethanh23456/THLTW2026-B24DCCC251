@@ -48,6 +48,18 @@
 		icon: 'OrderedListOutlined',
 		component: './LapTrinhWeb/index',
 	},
+	{
+		path: '/Bai1',
+		name: 'Bai1',
+		icon: 'OrderedListOutlined',
+		component: './Bai1/index',
+	},
+	{
+		path: '/Bai2',
+		name: 'Bai2',
+		icon: 'OrderedListOutlined',
+		component: './Bai2/index',
+	},
 
 	// DANH MUC HE THONG
 	// {
