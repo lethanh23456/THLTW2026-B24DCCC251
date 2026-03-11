@@ -1,28 +1,49 @@
-export interface Subject {
+export type DifficultyLevel = 'Dễ' | 'Trung bình' | 'Khó' | 'Rất khó';
+
+export interface KhoiKienThuc {
   id: string;
-  name: string;
-  color?: string;
+  ten: string;
+  moTa?: string;
 }
 
-export interface StudySession {
+export interface MonHoc {
   id: string;
-  subjectId: string;
-  date: string; 
-  startTime: string;
-  duration: number; 
-  content: string;
-  notes: string;
+  maMon: string;
+  tenMon: string;
+  soTinChi: number;
 }
 
-export interface MonthlyGoal {
+export interface CauHoi {
   id: string;
-  subjectId: string;
-  month: string; 
-  targetHours: number;
+  maCauHoi: string;
+  monHocId: string;
+  noiDung: string;
+  mucDoKho: DifficultyLevel;
+  khoiKienThucId: string;
+  createdAt: string;
 }
 
-export interface GlobalGoal {
+export interface CauTrucDeThi {
+  mucDoKho: DifficultyLevel;
+  khoiKienThucId: string;
+  soCauHoi: number;
+}
+
+export interface MauDeThi {
   id: string;
-  month: string; 
-  targetHours: number;
+  ten: string;
+  monHocId: string;
+  cauTruc: CauTrucDeThi[];
+  createdAt: string;
+}
+
+export interface DeThi {
+  id: string;
+  maDe: string;
+  tenDe: string;
+  monHocId: string;
+  mauDeThiId?: string;
+  cauHoiIds: string[];
+  cauTruc: CauTrucDeThi[];
+  createdAt: string;
 }
