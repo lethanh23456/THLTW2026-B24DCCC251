@@ -1,99 +1,70 @@
-import { useEffect, useState } from 'react';
-import { Card, InputNumber, Button, Typography, message, Space } from 'antd';
+import { useState } from 'react';
+import { Card, Button, Typography, Space, List } from 'antd';
 
 const { Title, Text } = Typography;
 
+const choices = ['Kéo', 'Búa', 'Bao'];
+
 const Bai1 = () => {
-    const [secretNumber, setSecretNumber] = useState<number>(0);
-    const [guess, setGuess] = useState<number | null>(null);
-    const [turn, setTurn] = useState<number>(1);
-    const [result, setResult] = useState<string>('');
-    const [gameOver, setGameOver] = useState<boolean>(false);
-   
+  const [result, setResult] = useState('');
+  const [history, setHistory] = useState<string[]>([]);
+  const [round, setRound] = useState(1);
 
-    const MAX_TURN = 10;
+  const playGame = (playerChoice: string) => {
+    const computerChoice = choices[Math.floor(Math.random() * 3)];
 
-    useEffect(() => {
-        startNewGame();
-    }, []);
+    let kq = '';
 
-    const startNewGame = () => {
-        const randomNumber = Math.floor(Math.random() * 100) + 1;
-        setSecretNumber(randomNumber);
-        setGuess(null);
-        setTurn(1);
-        setResult('');
-        setGameOver(false);
-    };
+    if (playerChoice === computerChoice) {
+      kq = 'Hòa';
+    } else if (
+      (playerChoice === 'Kéo' && computerChoice === 'Bao') ||
+      (playerChoice === 'Búa' && computerChoice === 'Kéo') ||
+      (playerChoice === 'Bao' && computerChoice === 'Búa')
+    ) {
+      kq = 'Bạn thắng';
+    } else {
+      kq = 'Bạn thua';
+    }
 
-    const handleGuess = () => {
-        if (guess === null) {
-            message.warning('Vui lòng nhập số!');
-            return;
-        }
+    const text = `Ván ${round}: Bạn chọn ${playerChoice}, Máy chọn ${computerChoice} → ${kq}`;
 
-        if (guess < secretNumber) {
-            setResult('Bạn đoán quá thấp!');
-        } else if (guess > secretNumber) {
-            setResult('Bạn đoán quá cao!');
-        } else {
-            setResult('Chúc mừng! Bạn đã đoán đúng!');
-            setGameOver(true);
-            return;
-        }
+    setResult(text);
+    setHistory((prev) => [text, ...prev]);
+    setRound(round + 1);
+  };
 
-        if (turn >= MAX_TURN) {
-            setResult(`Bạn đã hết lượt! Số đúng là ${secretNumber}.`);
-            setGameOver(true);
-        } else {
-            setTurn(turn + 1);
-        }
-    };
+  return (
+    <div style={{ padding: 20 }}>
+      <Card title="Trò chơi Oẳn Tù Tì" style={{ maxWidth: 500 }}>
+        <Space style={{ marginBottom: 20 }}>
+          <Button type="primary" onClick={() => playGame('Kéo')}>
+            Kéo
+          </Button>
 
-    return (
-        <Card style={{ maxWidth: 500, margin: '40px auto', textAlign: 'center' , maxHeight: 400}}>
-            <Title level={2}>Trò chơi đoán số</Title>
+          <Button type="primary" onClick={() => playGame('Búa')}>
+            Búa 
+          </Button>
 
-            <Text>Hệ thống đã sinh số từ 1 đến 100</Text>
-            <br />
-            <Text>Bạn có {MAX_TURN} lượt đoán</Text>
+          <Button type="primary" onClick={() => playGame('Bao')}>
+            Bao 
+          </Button>
+        </Space>
 
-            <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
-                <InputNumber
-                    min={1}
-                    max={100}
-                    value={guess}
-                    disabled={gameOver}
-                    onChange={(value) => setGuess(value)}
-                    style={{ width: '100%' }}
-                    placeholder="Nhập số từ 1 đến 100"
-                />
+        <div style={{ marginBottom: 20 }}>
+          <Text strong>{result}</Text>
+        </div>
 
-                <Button
-                    type="primary"
-                    onClick={handleGuess}
-                    disabled={gameOver}
-                    block
-                >
-                    Đoán
-                </Button>
+        <Title level={5}>Lịch sử ván đấu</Title>
 
-                {gameOver && (
-                    <Button onClick={startNewGame} block>
-                        Chơi lại
-                    </Button>
-                )}
-            </Space>
-
-            <div style={{ marginTop: 20 }}>
-                <Text strong>Lượt hiện tại: {turn}/{MAX_TURN}</Text>
-                <br />
-                <Text>{result}</Text>
-                <br />
-                
-            </div>
-        </Card>
-    );
+        <List
+          bordered
+          dataSource={history}
+          renderItem={(item) => <List.Item>{item}</List.Item>}
+        />
+      </Card>
+    </div>
+  );
 };
 
 export default Bai1;

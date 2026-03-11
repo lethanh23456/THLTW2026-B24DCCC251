@@ -1,12 +1,22 @@
-.bai2-container {
-  padding: 24px;
-  max-width: 1400px;
-  margin: 0 auto;
+.bai2-page {
+  .bai2-content {
+    min-height: auto;
 
-  .subject-management,
-  .study-tracking,
-  .goal-setting,
-  .goal-progress {
-    min-height: 400px;
+    @media (max-width: 992px) {
+      padding: 16px !important;
+    }
+  }
+
+  .bai2-main-card.ant-card,
+  .bai2-section-card.ant-card {
+    height: auto;
+  }
+
+  .bai2-main-card .ant-card-body {
+    min-height: auto;
+  }
+
+  .bai2-section-card .ant-empty {
+    margin: 32px 0;
   }
 }
