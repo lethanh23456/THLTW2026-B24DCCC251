@@ -1,70 +1,44 @@
-import { useState } from 'react';
-import { Card, Button, Typography, Space, List } from 'antd';
+import React from 'react';
+import { Tabs, Typography } from 'antd';
+import { BookingProvider } from './context';
+import { ServiceManager } from './components/ServiceManager';
+import { StaffManager } from './components/StaffManager';
+import { BookingManager } from './components/BookingManager';
+import { ReviewManager } from './components/ReviewManager';
+import { Dashboard } from './components/Dashboard';
 
-const { Title, Text } = Typography;
+const { TabPane } = Tabs;
+const { Title } = Typography;
 
-const choices = ['Kéo', 'Búa', 'Bao'];
-
-const Bai1 = () => {
-  const [result, setResult] = useState('');
-  const [history, setHistory] = useState<string[]>([]);
-  const [round, setRound] = useState(1);
-
-  const playGame = (playerChoice: string) => {
-    const computerChoice = choices[Math.floor(Math.random() * 3)];
-
-    let kq = '';
-
-    if (playerChoice === computerChoice) {
-      kq = 'Hòa';
-    } else if (
-      (playerChoice === 'Kéo' && computerChoice === 'Bao') ||
-      (playerChoice === 'Búa' && computerChoice === 'Kéo') ||
-      (playerChoice === 'Bao' && computerChoice === 'Búa')
-    ) {
-      kq = 'Bạn thắng';
-    } else {
-      kq = 'Bạn thua';
-    }
-
-    const text = `Ván ${round}: Bạn chọn ${playerChoice}, Máy chọn ${computerChoice} → ${kq}`;
-
-    setResult(text);
-    setHistory((prev) => [text, ...prev]);
-    setRound(round + 1);
-  };
-
+const Bai1App = () => {
   return (
-    <div style={{ padding: 20 }}>
-      <Card title="Trò chơi Oẳn Tù Tì" style={{ maxWidth: 500 }}>
-        <Space style={{ marginBottom: 20 }}>
-          <Button type="primary" onClick={() => playGame('Kéo')}>
-            Kéo
-          </Button>
-
-          <Button type="primary" onClick={() => playGame('Búa')}>
-            Búa 
-          </Button>
-
-          <Button type="primary" onClick={() => playGame('Bao')}>
-            Bao 
-          </Button>
-        </Space>
-
-        <div style={{ marginBottom: 20 }}>
-          <Text strong>{result}</Text>
-        </div>
-
-        <Title level={5}>Lịch sử ván đấu</Title>
-
-        <List
-          bordered
-          dataSource={history}
-          renderItem={(item) => <List.Item>{item}</List.Item>}
-        />
-      </Card>
+    <div style={{ padding: 24, background: '#fff', minHeight: '100vh' }}>
+      <Title level={2}>Hệ Thống Đặt Lịch Hẹn</Title>
+      <Tabs defaultActiveKey="1" type="card">
+        <TabPane tab="Quản lý Lịch Hẹn" key="1">
+          <BookingManager />
+        </TabPane>
+        <TabPane tab="Quản lý Dịch Vụ" key="2">
+          <ServiceManager />
+        </TabPane>
+        <TabPane tab="Quản lý Nhân Viên" key="3">
+          <StaffManager />
+        </TabPane>
+        <TabPane tab="Đánh Giá Phản Hồi" key="4">
+          <ReviewManager />
+        </TabPane>
+        <TabPane tab="Báo Cáo Thống Kê" key="5">
+          <Dashboard />
+        </TabPane>
+      </Tabs>
     </div>
   );
 };
+
+const Bai1 = () => (
+  <BookingProvider>
+    <Bai1App />
+  </BookingProvider>
+);
 
 export default Bai1;
