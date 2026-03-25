@@ -1,44 +1,39 @@
 import React from 'react';
-import { Tabs, Typography } from 'antd';
-import { BookingProvider } from './context';
-import { ServiceManager } from './components/ServiceManager';
-import { StaffManager } from './components/StaffManager';
-import { BookingManager } from './components/BookingManager';
-import { ReviewManager } from './components/ReviewManager';
-import { Dashboard } from './components/Dashboard';
+import { Tabs } from 'antd';
+import { DiplomaProvider } from './store';
+import DiplomaBooks from './components/DiplomaBooks';
+import GraduationDecisions from './components/GraduationDecisions';
+import FormConfigs from './components/FormConfigs';
+import Diplomas from './components/Diplomas';
+import DiplomaLookup from './components/DiplomaLookup';
 
 const { TabPane } = Tabs;
-const { Title } = Typography;
 
-const Bai1App = () => {
+const Bai1: React.FC = () => {
   return (
-    <div style={{ padding: 24, background: '#fff', minHeight: '100vh' }}>
-      <Title level={2}>Hệ Thống Đặt Lịch Hẹn</Title>
-      <Tabs defaultActiveKey="1" type="card">
-        <TabPane tab="Quản lý Lịch Hẹn" key="1">
-          <BookingManager />
-        </TabPane>
-        <TabPane tab="Quản lý Dịch Vụ" key="2">
-          <ServiceManager />
-        </TabPane>
-        <TabPane tab="Quản lý Nhân Viên" key="3">
-          <StaffManager />
-        </TabPane>
-        <TabPane tab="Đánh Giá Phản Hồi" key="4">
-          <ReviewManager />
-        </TabPane>
-        <TabPane tab="Báo Cáo Thống Kê" key="5">
-          <Dashboard />
-        </TabPane>
-      </Tabs>
-    </div>
+    <DiplomaProvider>
+      <div style={{ padding: 24, background: '#fff', minHeight: '80vh' }}>
+        <h2>Hệ Thống Quản Lý Sổ Văn Bằng Tốt Nghiệp</h2>
+        <Tabs defaultActiveKey="1" type="card">
+          <TabPane tab="Quản lý sổ văn bằng" key="1">
+            <DiplomaBooks />
+          </TabPane>
+          <TabPane tab="Quyết định tốt nghiệp" key="2">
+            <GraduationDecisions />
+          </TabPane>
+          <TabPane tab="Cấu hình biểu mẫu" key="3">
+            <FormConfigs />
+          </TabPane>
+          <TabPane tab="Thông tin văn bằng" key="4">
+            <Diplomas />
+          </TabPane>
+          <TabPane tab="Tra cứu văn bằng" key="5">
+            <DiplomaLookup />
+          </TabPane>
+        </Tabs>
+      </div>
+    </DiplomaProvider>
   );
 };
-
-const Bai1 = () => (
-  <BookingProvider>
-    <Bai1App />
-  </BookingProvider>
-);
 
 export default Bai1;
