@@ -9,7 +9,6 @@ const DiplomaLookup: React.FC = () => {
   const [selectedDiploma, setSelectedDiploma] = useState<Diploma | null>(null);
 
   const onSearch = (values: any) => {
-    // Count filled parameters
     const filledParams = Object.keys(values).filter(key => values[key] !== undefined && values[key] !== '').length;
     
     if (filledParams < 2) {
@@ -17,7 +16,7 @@ const DiplomaLookup: React.FC = () => {
       return;
     }
 
-    // Filter diplomas
+   
     const results = diplomas.filter(d => {
       let match = true;
       if (values.diplomaNumber && !d.diplomaNumber.includes(values.diplomaNumber)) match = false;
@@ -33,7 +32,6 @@ const DiplomaLookup: React.FC = () => {
 
   const handleViewDetails = (diploma: Diploma) => {
     setSelectedDiploma(diploma);
-    // Increment lookup count of the decision
     incrementLookupCount(diploma.decisionId);
   };
 

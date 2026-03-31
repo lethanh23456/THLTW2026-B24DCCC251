@@ -18,13 +18,10 @@ const Diplomas: React.FC = () => {
   ];
 
   const handleAdd = (values: any) => {
-    // Separate standard fields from dynamic fields
     const { diplomaNumber, studentId, fullName, dateOfBirth, decisionId, ...dynamicValues } = values;
-    
-    // Format dateOfBirth
+
     const formattedDob = dateOfBirth.format('YYYY-MM-DD');
 
-    // Format dynamic dates if any
     const formattedDynamicFields: Record<string, any> = {};
     formConfigs.forEach(config => {
       const val = dynamicValues[`dynamic_${config.id}`];
@@ -78,7 +75,6 @@ const Diplomas: React.FC = () => {
       >
         <Form form={form} layout="vertical" onFinish={handleAdd}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            {/* Standard Fields */}
             <Form.Item name="decisionId" label="Quyết định tốt nghiệp" rules={[{ required: true, message: 'Vui lòng chọn quyết định' }]}>
               <Select>
                 {decisions.map(d => {
@@ -104,7 +100,6 @@ const Diplomas: React.FC = () => {
               <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
             </Form.Item>
 
-            {/* Dynamic Fields */}
             {formConfigs.map(config => (
               <Form.Item 
                 key={config.id} 
