@@ -1,38 +1,54 @@
-import React from 'react';
-import { Tabs } from 'antd';
-import { DiplomaProvider } from './store';
-import DiplomaBooks from './components/DiplomaBooks';
-import GraduationDecisions from './components/GraduationDecisions';
-import FormConfigs from './components/FormConfigs';
-import Diplomas from './components/Diplomas';
-import DiplomaLookup from './components/DiplomaLookup';
+import React, { useState } from 'react';
+import { Card, Tabs } from 'antd';
+import { ClubProvider } from './ClubContext';
+import ClubsList from './components/ClubsList';
+import ApplicationsList from './components/ApplicationsList';
+import MembersList from './components/MembersList';
+import Dashboard from './components/Dashboard';
 
 const { TabPane } = Tabs;
 
+const Bai1Content: React.FC = () => {
+  const [activeTab, setActiveTab] = useState('1');
+  const [membersTabClubId, setMembersTabClubId] = useState<string | null>(null);
+
+  const handleViewMembers = (clubId: string) => {
+    setMembersTabClubId(clubId);
+    setActiveTab('3');
+  };
+
+  const handleTabChange = (key: string) => {
+    setActiveTab(key);
+    if (key !== '3') {
+      setMembersTabClubId(null);
+    }
+  };
+
+  return (
+    <Card title="Hệ thống Quản lý Câu lạc bộ" style={{ margin: 24 }}>
+      <Tabs activeKey={activeTab} onChange={handleTabChange}>
+        <TabPane tab="Danh sách Câu lạc bộ" key="1">
+          <ClubsList onViewMembers={handleViewMembers} />
+        </TabPane>
+        <TabPane tab="Đơn đăng ký ứng viên" key="2">
+          <ApplicationsList />
+        </TabPane>
+        <TabPane tab="Quản lý thành viên (Approved)" key="3">
+          <MembersList initialClubId={membersTabClubId} />
+        </TabPane>
+        <TabPane tab="Báo cáo & Thống kê" key="4">
+          <Dashboard />
+        </TabPane>
+      </Tabs>
+    </Card>
+  );
+};
+
 const Bai1: React.FC = () => {
   return (
-    <DiplomaProvider>
-      <div style={{ padding: 24, background: '#fff', minHeight: '80vh' }}>
-        <h2>Hệ Thống Quản Lý Sổ Văn Bằng Tốt Nghiệp</h2>
-        <Tabs defaultActiveKey="1" type="card">
-          <TabPane tab="Quản lý sổ văn bằng" key="1">
-            <DiplomaBooks />
-          </TabPane>
-          <TabPane tab="Quyết định tốt nghiệp" key="2">
-            <GraduationDecisions />
-          </TabPane>
-          <TabPane tab="Cấu hình biểu mẫu" key="3">
-            <FormConfigs />
-          </TabPane>
-          <TabPane tab="Thông tin văn bằng" key="4">
-            <Diplomas />
-          </TabPane>
-          <TabPane tab="Tra cứu văn bằng" key="5">
-            <DiplomaLookup />
-          </TabPane>
-        </Tabs>
-      </div>
-    </DiplomaProvider>
+    <ClubProvider>
+      <Bai1Content />
+    </ClubProvider>
   );
 };
 
