@@ -43,16 +43,10 @@
 		component: './TodoList',
 	},
 	{
-		path: '/LapTrinhWeb',
-		name: 'LapTrinhWeb',
+		path: '/QuanLyPhongHoc',
+		name: 'QuanLyPhongHoc',
 		icon: 'OrderedListOutlined',
-		component: './LapTrinhWeb/index',
-	},
-	{
-		path: '/Bai1',
-		name: 'Bai1',
-		icon: 'OrderedListOutlined',
-		component: './Bai1/index',
+		component: './QuanLyPhongHoc/index',
 	},
 
 
